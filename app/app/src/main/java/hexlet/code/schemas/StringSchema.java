@@ -1,40 +1,24 @@
 package hexlet.code.schemas;
 
-public class StringSchema {
-    private boolean isRequired = false;
-    private int minLength = 0;
-    private String containsSubstring = null;
+public class StringSchema extends BaseSchema<String> {
+
+    public StringSchema() {
+        super();
+    }
 
     public StringSchema required() {
-        this.isRequired = true;
+        super.required();
+        addValidation(value -> !value.isEmpty());
         return this;
     }
 
     public StringSchema minLength(int length) {
-        this.minLength = length;
+        addValidation(value -> value.length() >= length);
         return this;
     }
 
     public StringSchema contains(String substring) {
-        this.containsSubstring = substring;
+        addValidation(value -> value.contains(substring));
         return this;
-    }
-
-    public boolean isValid(String value) {
-        if (isRequired) {
-            if (value == null || value.isEmpty()) {
-                return false;
-            }
-        }
-
-        if (value != null && value.length() < minLength) {
-            return false;
-        }
-
-        if (containsSubstring != null && value != null && !value.contains(containsSubstring)) {
-            return false;
-        }
-
-        return true;
     }
 }
