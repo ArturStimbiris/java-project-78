@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ValidatorTest {
+
     @Test
     public void testStringSchema() {
         Validator v = new Validator();
