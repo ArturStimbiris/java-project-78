@@ -65,6 +65,28 @@ public class ValidatorTest {
     public void testMapSchema() {
         Validator v = new Validator();
         MapSchema schema = v.map();
+
+        assertTrue(schema.isValid(null));
+
+        schema.required();
+        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid(new HashMap<>()));
+
+        Map<String, String> data = new HashMap<>();
+        data.put("key1", "value1");
+        assertTrue(schema.isValid(data));
+
+        schema.sizeof(2);
+        assertFalse(schema.isValid(data));
+
+        data.put("key2", "value2");
+        assertTrue(schema.isValid(data));
+    }
+
+    @Test
+    public void testMapSchemaShape() {
+        Validator v = new Validator();
+        MapSchema schema = v.map();
         Map<String, BaseSchema> schemas = new HashMap<>();
         schemas.put("name", v.string().required());
         schemas.put("age", v.number().positive());
