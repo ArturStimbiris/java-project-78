@@ -1,24 +1,17 @@
 package hexlet.code.schemas;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
-public abstract class BaseSchema<T> {
-    private boolean isRequired = false;
-    private Predicate<T> validationRules = value -> true;
+public class BaseSchema {
+    private List<Predicate<Object>> predicates = new ArrayList<>();
 
-    public BaseSchema<T> required() {
-        this.isRequired = true;
-        return this;
+    public final List<Predicate<Object>> getPredicates() {
+        return predicates;
     }
 
-    protected void addValidation(Predicate<T> rule) {
-        this.validationRules = this.validationRules.and(rule);
-    }
-
-    public boolean isValid(T value) {
-        if (value == null) {
-            return !isRequired;
-        }
-        return validationRules.test(value);
+    public final boolean isValid(Object obj) {
+        return predicates.stream().allMatch(v -> v.test(obj));
     }
 }
