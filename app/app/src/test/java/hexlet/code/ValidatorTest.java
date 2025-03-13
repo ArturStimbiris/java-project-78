@@ -16,7 +16,7 @@ import java.util.Map;
 public class ValidatorTest {
 
     @Test
-    public void testStringSchema() {
+    public void testStringValidator() {
         Validator v = new Validator();
         StringSchema schema = v.string();
 
