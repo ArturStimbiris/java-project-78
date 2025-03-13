@@ -11,7 +11,7 @@ public class BaseSchema<T> {
         return predicates;
     }
 
-    public final boolean isValid(T obj) {
+    public boolean isValid(T obj) {
         return predicates.stream().allMatch(v -> v.test(obj));
     }
 }

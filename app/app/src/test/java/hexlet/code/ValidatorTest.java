@@ -39,6 +39,17 @@ public class ValidatorTest {
         assertFalse(schema.isValid(""));
         assertFalse(schema.isValid("hex"));
         assertTrue(schema.isValid("hexlet"));
+
+        schema.contains("whatthe");
+        assertFalse(schema.isValid("what does the fox say"));
+
+        schema.contains("fox");
+        assertTrue(schema.isValid("what does the fox say"));
+        assertFalse(schema.isValid("hexlet"));
+
+        StringSchema schema1 = v.string();
+        schema1.minLength(10).minLength(4);
+        assertTrue(schema1.isValid("Hexlet"));
     }
 
     @Test
