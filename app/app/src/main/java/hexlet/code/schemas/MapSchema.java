@@ -2,27 +2,27 @@ package hexlet.code.schemas;
 
 import java.util.Map;
 
-public final class MapSchema extends BaseSchema {
+public final class MapSchema extends BaseSchema<Map<?, ?>> {
     public MapSchema required() {
-        getPredicates().add(v -> v instanceof Map<?, ?>);
+        getPredicates().add(v -> v != null);
         return this;
     }
 
     public MapSchema sizeof(int size) {
-        getPredicates().add(v -> ((Map<?, ?>) v).size() == size);
+        getPredicates().add(v -> v != null && v.size() == size);
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema> schemas) {
+    public <T> MapSchema shape(Map<String, BaseSchema<T>> schemas) {
         getPredicates().add(v -> checkMap((Map<?, ?>) v, schemas));
         return this;
     }
 
-    boolean checkMap(Map<?, ?> v, Map<?, BaseSchema> sch) {
-        for (var x : sch.entrySet()) {
-            var k = x.getKey();
-            var value = x.getValue();
-            if (!value.isValid(v.get(k))) {
+    <T> boolean checkMap(Map<?, ?> v, Map<String, BaseSchema<T>> schemas) {
+        for (var entry : schemas.entrySet()) {
+            var key = entry.getKey();
+            var schema = entry.getValue();
+            if (!schema.isValid((T) v.get(key))) {
                 return false;
             }
         }
