@@ -35,6 +35,10 @@ public class ValidatorTest {
         schema.contains("hex");
         assertTrue(schema.isValid("hexlet"));
         assertFalse(schema.isValid("what does the fox say"));
+
+        assertFalse(schema.isValid(""));
+        assertFalse(schema.isValid("hex"));
+        assertTrue(schema.isValid("hexlet"));
     }
 
     @Test
