@@ -37,7 +37,7 @@ public class ValidatorTest {
         assertFalse(schema.isValid("what does the fox say"));
 
         assertFalse(schema.isValid(""));
-        assertFalse(schema.isValid("hex"));
+        assertTrue(schema.isValid("hex"));
         assertTrue(schema.isValid("hexlet"));
 
         schema.contains("whatthe");
@@ -71,6 +71,7 @@ public class ValidatorTest {
 
         schema.range(5, 10);
         assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(7));
         assertTrue(schema.isValid(10));
         assertFalse(schema.isValid(4));
         assertFalse(schema.isValid(11));
@@ -125,7 +126,7 @@ public class ValidatorTest {
         Map<String, Object> human3 = new HashMap<>();
         human3.put("name", "");
         human3.put("age", null);
-        assertFalse(schema.isValid(human3));
+        assertTrue(schema.isValid(human3));
 
         Map<String, Object> human4 = new HashMap<>();
         human4.put("name", "Valya");

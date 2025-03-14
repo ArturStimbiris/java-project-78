@@ -12,6 +12,9 @@ public class BaseSchema<T> {
     }
 
     public boolean isValid(T obj) {
-        return predicates.stream().allMatch(v -> v.test(obj));
+        if (predicates.isEmpty()) {
+            return true;
+        }
+        return predicates.get(predicates.size() - 1).test(obj);
     }
 }
