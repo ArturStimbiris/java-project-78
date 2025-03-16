@@ -12,12 +12,12 @@ public class BaseSchema<T> {
         return predicates;
     }
 
-    protected void setPredicate(String key, Predicate<T> predicate) {
+    protected final void setPredicate(String key, Predicate<T> predicate) {
         predicates.put(key, predicate);
     }
 
 
-    public boolean isValid(T obj) {
+    public final boolean isValid(T obj) {
         if (!required && obj == null) {
             return true;
         }
