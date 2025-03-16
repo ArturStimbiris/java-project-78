@@ -1,20 +1,29 @@
 package hexlet.code.schemas;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class BaseSchema<T> {
-    private List<Predicate<T>> predicates = new ArrayList<>();
+    private Map<String, Predicate<T>> predicates = new HashMap<>();
+    protected boolean required;
 
-    public final List<Predicate<T>> getPredicates() {
+    public final Map<String, Predicate<T>> getPredicates() {
         return predicates;
     }
 
+    protected void setPredicate(String key, Predicate<T> predicate) {
+        predicates.put(key, predicate);
+    }
+
+
     public boolean isValid(T obj) {
-        if (predicates.isEmpty()) {
+        if (!required && obj == null) {
             return true;
         }
-        return predicates.get(predicates.size() - 1).test(obj);
+        if (required && obj == null) {
+            return false;
+        }
+        return predicates.values().stream().allMatch(predicate -> predicate.test(obj));
     }
 }

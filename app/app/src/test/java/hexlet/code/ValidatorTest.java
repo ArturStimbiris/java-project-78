@@ -37,7 +37,7 @@ public class ValidatorTest {
         assertFalse(schema.isValid("what does the fox say"));
 
         assertFalse(schema.isValid(""));
-        assertTrue(schema.isValid("hex"));
+        assertFalse(schema.isValid("hex"));
         assertTrue(schema.isValid("hexlet"));
 
         schema.contains("whatthe");
@@ -59,10 +59,14 @@ public class ValidatorTest {
 
         assertTrue(schema.isValid(5));
         assertTrue(schema.isValid(null));
+        assertTrue(schema.positive().isValid(null));
 
         schema.required();
         assertFalse(schema.isValid(null));
         assertTrue(schema.isValid(10));
+        assertTrue(schema.isValid(5));
+        assertFalse(schema.isValid(-10));
+        assertFalse(schema.isValid(0));
 
         schema.positive();
         assertFalse(schema.isValid(-10));
